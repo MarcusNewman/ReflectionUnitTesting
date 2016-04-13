@@ -35,7 +35,7 @@ namespace MGN.ReflectionAssert.Tests
         {
             var className = assemblyName + ".ReflectionAssert";
             var classType = ClassShouldExist(className);
-            Assert.IsNotNull(classType);
+            Assert.IsNotNull(classType, message: string.Format("{0} class should exist.", className));
         }
 
         Type ClassShouldExist(string className)
