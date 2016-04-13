@@ -9,6 +9,7 @@ namespace MGN.ReflectionAssert.Tests
     {
         string assemblyName = "MGN.ReflectionAssert";
         string className = "ReflectionAssert";
+        string methodName = "AssemblyShouldExist";
 
         [TestMethod]
         public void AssemblyShouldExist()
@@ -48,7 +49,6 @@ namespace MGN.ReflectionAssert.Tests
         [TestMethod]
         public void AssemblyShouldExistMethodShouldExist()
         {
-            var methodName = "AssemblyShouldExist";
             var methodInfo = MethodShouldExist(methodName);
             Assert.IsNotNull(methodInfo, message: methodName + " method should exist");
         }
@@ -58,6 +58,46 @@ namespace MGN.ReflectionAssert.Tests
             var classType = ClassShouldExist(className);
             var methodInfo = classType.GetMethod(methodName);
             return methodInfo;
+        }
+
+        [TestMethod]
+        public void AssemblyShouldExistShouldAcceptAStringArgumentNamedAssemblyName()
+        {
+            var methodInfo = MethodShouldExist(methodName);
+            var parameters = methodInfo.GetParameters();
+            Assert.AreEqual(expected: 1, actual: parameters.Length);
+            var parameter = parameters[0];
+            Assert.AreEqual(expected: typeof(string), actual: parameter.ParameterType);
+            Assert.AreEqual(expected: "assemblyName", actual: parameter.Name);
+        }
+
+        [TestMethod]
+        public void AssemblyShouldExistShouldBeStaticAndReturnAnAssemblyWithAValidAssemblyName()
+        {
+            var methodInfo = MethodShouldExist(methodName: methodName);
+            var isStatic = methodInfo.IsStatic;
+            Assert.IsTrue(condition: isStatic);
+            var assembly = methodInfo.Invoke(null, new object[] { assemblyName });
+            Assert.IsInstanceOfType(value: assembly, expectedType: typeof(Assembly));
+        }
+
+        [TestMethod]
+        public void AssemblyShouldExistShouldThrowAnAssertFailedExceptionWithAnInvalidAssemblyName()
+        {
+            var methodInfo = MethodShouldExist(methodName: methodName);
+            Exception actualException = null;
+            var invalidAssemblyName = "InvalidAssemblyName";
+            try
+            {
+                methodInfo.Invoke(null, new object[] { invalidAssemblyName });
+            }
+            catch (TargetInvocationException exception)
+            {               
+                actualException = exception.InnerException;
+            }
+            Assert.IsInstanceOfType(value: actualException, expectedType: typeof(AssertFailedException));
+            Assert.AreEqual(expected: invalidAssemblyName + " assembly should exist.", actual: actualException.Message);
+            Assert.IsNotNull(value: actualException.InnerException);
         }
     }
 }
