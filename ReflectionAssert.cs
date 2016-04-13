@@ -10,6 +10,11 @@ namespace MGN.ReflectionAssert
 {
     public class ReflectionAssert
     {
+        /// <summary>
+        /// Tests for the existance of an assembly using reflection. 
+        /// </summary>
+        /// <param name="assemblyName"></param>
+        /// <returns></returns>
         public static Assembly AssemblyShouldExist(string assemblyName)
         {
             Assembly assembly = null;
@@ -29,5 +34,7 @@ namespace MGN.ReflectionAssert
             var path = string.Format("..\\..\\..\\bin\\Debug\\{0}.dll", assemblyName);
             return Assembly.LoadFrom(path);
         }
+
+        public static void TypeShouldExist(Assembly assembly, string typeName) { }
     }
 }

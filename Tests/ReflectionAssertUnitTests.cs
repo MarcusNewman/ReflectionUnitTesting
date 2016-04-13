@@ -8,7 +8,7 @@ namespace MGN.ReflectionAssert.Tests
     public class ReflectionAssertUnitTests
     {
         string assemblyName = "MGN.ReflectionAssert";
-        string className = "ReflectionAssert";
+        string typeName = "ReflectionAssert";
         string methodName = "AssemblyShouldExist";
 
         [TestMethod]
@@ -33,17 +33,17 @@ namespace MGN.ReflectionAssert.Tests
         }
 
         [TestMethod]
-        public void ClassShouldExist()
+        public void TypeShouldExist()
         {
-            var classType = ClassShouldExist(className);
-            Assert.IsNotNull(classType, message: className + " class should exist.");
+            var type = TypeShouldExist(typeName);
+            Assert.IsNotNull(type, message: typeName + " type should exist.");
         }
 
-        Type ClassShouldExist(string className)
+        Type TypeShouldExist(string typeName)
         {
             var assembly = AssemblyShouldExist(assemblyName);
-            var classType = assembly.GetType(assemblyName + '.' + className);
-            return classType;
+            var type = assembly.GetType(assemblyName + '.' + typeName);
+            return type;
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace MGN.ReflectionAssert.Tests
 
         private MethodInfo MethodShouldExist(string methodName)
         {
-            var classType = ClassShouldExist(className);
+            var classType = TypeShouldExist(typeName);
             var methodInfo = classType.GetMethod(methodName);
             return methodInfo;
         }
@@ -98,6 +98,36 @@ namespace MGN.ReflectionAssert.Tests
             Assert.IsInstanceOfType(value: actualException, expectedType: typeof(AssertFailedException));
             Assert.AreEqual(expected: invalidAssemblyName + " assembly should exist.", actual: actualException.Message);
             Assert.IsNotNull(value: actualException.InnerException);
+        }
+
+        [TestMethod]
+        public void TypeShouldExistMethodShouldExist()
+        {
+            var methodInfo = MethodShouldExist(methodName: "TypeShouldExist");        
+            Assert.IsNotNull(methodInfo, message: methodName + " method should exist.");
+        }
+
+        [TestMethod]
+        public void TypeShouldExistMethodShouldBeStatic()
+        {
+            var methodInfo = MethodShouldExist(methodName: "TypeShouldExist");
+            var isStatic = methodInfo.IsStatic;
+            Assert.IsTrue(condition:isStatic,message: methodName + " method should be static.");
+        }
+
+        [TestMethod]
+        public void TypeShouldExistShouldAcceptAnAssemblyAndStringArgumentsNamedAssemblyAndTypeName()
+        {
+            var methodName = "TypeShouldExist";
+            var methodInfo = MethodShouldExist(methodName);
+            var parameters = methodInfo.GetParameters();
+            Assert.AreEqual(expected: 2, actual: parameters.Length);
+            var parameter1 = parameters[0];
+            Assert.AreEqual(expected: typeof(Assembly), actual: parameter1.ParameterType);
+            Assert.AreEqual(expected: "assembly", actual: parameter1.Name);
+            var parameter2 = parameters[1];
+            Assert.AreEqual(expected: typeof(string), actual: parameter2.ParameterType);
+            Assert.AreEqual(expected: "typeName", actual: parameter2.Name);
         }
     }
 }
