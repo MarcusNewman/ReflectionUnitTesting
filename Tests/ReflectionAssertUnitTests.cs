@@ -6,10 +6,12 @@ namespace MGN.ReflectionAssert.Tests
     [TestClass]
     public class ReflectionAssertUnitTests
     {
+        string assemblyName = "MGN.ReflectionAssert";
+
         [TestMethod]
         public void AssemblyShouldExist()
         {
-            var assemblyName = "MGN.ReflectionAssert";
+
             var assembly = AssemblyShouldExist(assemblyName);
             Assert.IsNotNull(assembly, message: string.Format("Assembly {0}.dll should exist.", assemblyName));
         }
@@ -26,6 +28,15 @@ namespace MGN.ReflectionAssert.Tests
             {
             }
             return assembly;
+        }
+
+        [TestMethod]
+        public void ClassShouldExist()
+        {
+            var assembly = AssemblyShouldExist(assemblyName);
+            var className = assemblyName + ".ReflectionAssert";
+            var classType = assembly.GetType(className);
+            Assert.IsNotNull(classType);
         }
     }
 }
