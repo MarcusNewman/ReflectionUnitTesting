@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
+using System;
 
 namespace MGN.ReflectionAssert.Tests
 {
@@ -11,7 +12,6 @@ namespace MGN.ReflectionAssert.Tests
         [TestMethod]
         public void AssemblyShouldExist()
         {
-
             var assembly = AssemblyShouldExist(assemblyName);
             Assert.IsNotNull(assembly, message: string.Format("Assembly {0}.dll should exist.", assemblyName));
         }
@@ -33,10 +33,16 @@ namespace MGN.ReflectionAssert.Tests
         [TestMethod]
         public void ClassShouldExist()
         {
-            var assembly = AssemblyShouldExist(assemblyName);
             var className = assemblyName + ".ReflectionAssert";
-            var classType = assembly.GetType(className);
+            var classType = ClassShouldExist(className);
             Assert.IsNotNull(classType);
+        }
+
+        Type ClassShouldExist(string className)
+        {
+            var assembly = AssemblyShouldExist(assemblyName);            
+            var classType = assembly.GetType(className);
+            return classType;
         }
     }
 }
