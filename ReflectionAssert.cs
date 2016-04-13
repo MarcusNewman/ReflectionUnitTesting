@@ -8,5 +8,9 @@ namespace MGN.ReflectionAssert
 {
     public class ReflectionAssert
     {
+        public void AssemblyShouldExist()
+        {
+
+        }
     }
 }
