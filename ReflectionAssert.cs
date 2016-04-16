@@ -15,7 +15,7 @@ namespace MGN.ReflectionAssert
         /// </summary>
         /// <param name="assemblyName"></param>
         /// <returns></returns>
-        public static Assembly AssemblyShouldExist(string assemblyName)
+        public static object Assembly_should_exist(string assemblyName)
         {
             Assembly assembly = null;
             try
@@ -35,6 +35,6 @@ namespace MGN.ReflectionAssert
             return Assembly.LoadFrom(path);
         }
 
-        public static void TypeShouldExist(Assembly assembly, string typeName) { }
+        //public static void TypeShouldExist(Assembly assembly, string typeName) { }
     }
 }
