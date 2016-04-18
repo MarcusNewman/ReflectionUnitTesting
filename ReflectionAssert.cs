@@ -15,26 +15,17 @@ namespace MGN.ReflectionAssert
         /// </summary>
         /// <param name="assemblyName"></param>
         /// <returns></returns>
-        public static object Assembly_should_exist(string assemblyName)
+        public static Assembly AssemblyExists(string assemblyName)
         {
-            Assembly assembly = null;
+            var path = string.Format("..\\..\\..\\bin\\Debug\\{0}.dll", assemblyName);
             try
             {
-                assembly = GetAssembly(assemblyName);
+                return Assembly.LoadFrom(path);
             }
             catch (Exception ex)
             {
-                throw new AssertFailedException(msg: assemblyName + " assembly should exist.", ex: ex);
+                throw new AssertFailedException(assemblyName + " assembly should exist.", ex);
             }
-            return assembly;
         }
-
-        static Assembly GetAssembly(string assemblyName)
-        {
-            var path = string.Format("..\\..\\..\\bin\\Debug\\{0}.dll", assemblyName);
-            return Assembly.LoadFrom(path);
-        }
-
-        //public static void TypeShouldExist(Assembly assembly, string typeName) { }
     }
 }
