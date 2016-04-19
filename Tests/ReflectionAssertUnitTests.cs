@@ -76,10 +76,11 @@ public class ReflectionAssertUnitTests
         Assert.AreEqual(expected: typeof(string), actual: parameter.ParameterType, message: methodName + " should accept a string parameter.");
     }
 
-    private ParameterInfo GetParameter(string methodName)
+    private ParameterInfo GetParameter(string methodName, int parameter = 0)
     {
         var parameters = GetParameters(methodName);
-        return parameters[0];
+        if (parameter > parameters.Length) return null;
+        return parameters[parameter];
     }
 
     [TestMethod]
@@ -161,11 +162,12 @@ public class ReflectionAssertUnitTests
     }
 
     [TestMethod]
-    public void TypeExists_should_accept_one_parameter()
+    public void TypeExists_should_accept_two_parameters()
     {
         var methodName = "TypeExists";
-        var parameters = GetParameters(methodName);
-        Assert.AreEqual(expected: 1, actual: parameters.Length, message: methodName + " should accept one parameter.");
+        var expected = 2;
+        var actual = GetParameters(methodName).Length;
+        Assert.AreEqual(expected, actual, methodName + " should accept one parameter.");
     }
 
     [TestMethod]
@@ -178,10 +180,43 @@ public class ReflectionAssertUnitTests
     }
 
     [TestMethod]
-    public void TypeExists_should_accept_a_parameter_named_typeName()
+    public void TypeExists_should_accept_an_assembly_parameter()
     {
         var methodName = "TypeExists";
         var parameter = GetParameter(methodName);
+        var expected = typeof(Assembly);
+        var actual = parameter.ParameterType;
+        var message = methodName + " should accept an assembly parameter.";
+        Assert.AreEqual(expected, actual, message);
+    }
+
+    [TestMethod]
+    public void TypeExists_should_accept_a_first_parameter_named_assembly()
+    {
+        var methodName = "TypeExists";
+        var parameter = GetParameter(methodName);
+        var expected = "assembly";
+        var actual = parameter.Name;
+        var message = methodName + " should accept a parameter named " + expected + ".";
+        Assert.AreEqual(expected, actual, message);
+    }
+
+    [TestMethod]
+    public void TypeExists_should_accept_a_second_parameter_of_type_string()
+    {
+        var methodName = "TypeExists";
+        var parameter = GetParameter(methodName, 1);
+        var expected = typeof(string);
+        var actual = parameter.ParameterType;
+        var message = methodName + " should accept an string parameter.";
+        Assert.AreEqual(expected, actual, message);
+    }
+
+    [TestMethod]
+    public void TypeExists_should_accept_a_second_parameter_named_typeName()
+    {
+        var methodName = "TypeExists";
+        var parameter = GetParameter(methodName, 1);
         var expected = "typeName";
         var actual = parameter.Name;
         var message = methodName + " should accept a parameter named " + expected + ".";
@@ -189,12 +224,48 @@ public class ReflectionAssertUnitTests
     }
 
     [TestMethod]
-    public void TypeExists_should_be_static()
+    public void TypeExists_should_return_a_type()
     {
         var methodName = "TypeExists";
+        var expected = typeof(Type);
+        var actual = GetMethod(methodName).ReturnType;
+        Assert.AreEqual(expected, actual, methodName + " should return a type.");
+    }
+
+    [TestMethod]
+    public void TypeExists_should_return_the_correct_type_with_a_valid_typeName()
+    {
+        var methodName = "TypeExists";
+        var assembly = GetAssembly(assemblyName);
         var methodInfo = GetMethod(methodName: methodName);
-        var isStatic = methodInfo.IsStatic;
-        Assert.IsTrue(isStatic, methodName + " should be static.");
+        var expected = typeName;
+        var actual = ((Type)methodInfo.Invoke(null, new object[] { assembly, typeName })).Name;
+        Assert.AreEqual(expected, actual, methodName + " should return the correct type with a valid typeName.");
+    }
+
+
+    [TestMethod]
+    public void TypeExists_should_throw_an_AssertFailedException_with_an_invalid_typeName()
+    {
+        var value = GetTypeWithInvalidName();
+        var expectedType = typeof(AssertFailedException);
+        Assert.IsInstanceOfType(value, expectedType);
+    }
+
+    private Exception GetTypeWithInvalidName()
+    {
+        var methodName = "TypeExists";
+        var assembly = GetAssembly(assemblyName);
+        var methodInfo = GetMethod(methodName: methodName);
+        Exception actualException = null;
+        try
+        {
+            methodInfo.Invoke(null, new object[] { assembly, "invalidTypeName" });            
+        }
+        catch (TargetInvocationException exception)
+        {
+            actualException = exception.InnerException;
+        }
+        return actualException;
     }
 }
-

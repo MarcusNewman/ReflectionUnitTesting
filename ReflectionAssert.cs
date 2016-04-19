@@ -26,6 +26,16 @@ public static class ReflectionAssert
         }
     }
 
-    public static void TypeExists(this string typeName) { }
+    public static Type TypeExists(this Assembly assembly, string typeName)
+    {
+        try
+        {
+            return assembly.GetType(typeName);
+        }
+        catch (Exception ex)
+        {
+            throw new AssertFailedException(typeName + " type should exist.", ex);
+        }
+    }
 }
 
