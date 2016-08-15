@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
 using System;
-using System.Runtime.CompilerServices;
 
 [TestClass]
 public class ReflectionAssertBaseUnitTests
