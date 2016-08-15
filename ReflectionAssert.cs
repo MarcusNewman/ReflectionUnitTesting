@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+/// <summary>
+/// </summary>
 public static class ReflectionAssert
 {
     /// <summary>
@@ -28,17 +30,16 @@ public static class ReflectionAssert
 
     public static Type TypeExists(this Assembly assembly, string typeName)
     {
-        Type type = null;
-        try
-        {
-            type = assembly.GetType(typeName);
-        }
-        catch (Exception ex)
-        {
-            throw new AssertFailedException(typeName + " type should exist.", ex);
-        }
+        var type = assembly.GetType(typeName);
         if (type == null) throw new AssertFailedException(typeName + " type should exist.");
         return type;
+    }
+
+    public static MethodInfo MethodExists(this Type type, string methodName)
+    {
+        var methodInfo = type.GetMethod(methodName);
+        if (methodInfo == null) throw new AssertFailedException(methodName + " method should exist.");
+        return methodInfo;
     }
 }
 
