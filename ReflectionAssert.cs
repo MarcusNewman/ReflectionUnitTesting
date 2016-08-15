@@ -28,14 +28,17 @@ public static class ReflectionAssert
 
     public static Type TypeExists(this Assembly assembly, string typeName)
     {
+        Type type = null;
         try
         {
-            return assembly.GetType(typeName);
+            type = assembly.GetType(typeName);
         }
         catch (Exception ex)
         {
             throw new AssertFailedException(typeName + " type should exist.", ex);
         }
+        if (type == null) throw new AssertFailedException(typeName + " type should exist.");
+        return type;
     }
 }
 
