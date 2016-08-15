@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /// <summary>
+/// Methods for unit testing with reflection.
 /// </summary>
 public static class ReflectionAssert
 {
@@ -28,6 +29,12 @@ public static class ReflectionAssert
         }
     }
 
+    /// <summary>
+    /// Tests for the existance of a type using reflection. 
+    /// </summary>
+    /// <param name="assembly"></param>
+    /// <param name="typeName"></param>
+    /// <returns></returns>
     public static Type TypeExists(this Assembly assembly, string typeName)
     {
         var type = assembly.GetType(typeName);
@@ -35,6 +42,12 @@ public static class ReflectionAssert
         return type;
     }
 
+    /// <summary>
+    /// Tests for the existance of a method using reflection.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="methodName"></param>
+    /// <returns></returns>
     public static MethodInfo MethodExists(this Type type, string methodName)
     {
         var methodInfo = type.GetMethod(methodName);
