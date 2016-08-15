@@ -6,7 +6,6 @@ using System;
 public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
 {
     string methodName = "AssemblyExists";
-    string invalidAssemblyName = "InvalidAssemblyName";
 
     [TestMethod]
     public void AssemblyExists_method_should_exist()
@@ -78,7 +77,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void AssemblyExists_should_throw_an_AssertFailedException_if_the_assembly_is_not_found()
     {
-        var actualException = TryToInvokeAssemblyExistsWithInvalidAssemblyName();
+        var actualException = TryToInvokeAssemblyExistsWithInvalidName();
         var expectedType = typeof(AssertFailedException);
         var message = methodName + " should throw an AssertFailed exception if the assembly is not found.";
         Assert.IsInstanceOfType(actualException, expectedType, message);
@@ -87,9 +86,9 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void AssemblyExists_error_message_should_be_assembly_should_exist()
     {
-        var actualException = TryToInvokeAssemblyExistsWithInvalidAssemblyName();
+        var actualException = TryToInvokeAssemblyExistsWithInvalidName();
         var actual = actualException.Message;
-        var expected = invalidAssemblyName + " assembly should exist.";
+        var expected = invalidName + " assembly should exist.";
         var message = methodName + " error message should be " + expected;
         Assert.AreEqual(expected, actual, message);
     }
@@ -97,7 +96,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void AssemblyExists_error_should_contain_the_InnerException()
     {
-        var actualException = TryToInvokeAssemblyExistsWithInvalidAssemblyName();
+        var actualException = TryToInvokeAssemblyExistsWithInvalidName();
         var value = actualException.InnerException;
         var message = methodName + " error should contain the inner exception.";
         Assert.IsNotNull(value, message);
@@ -110,12 +109,12 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
         return (Assembly)methodInfo.Invoke(null, parameters);
     }
 
-    Exception TryToInvokeAssemblyExistsWithInvalidAssemblyName()
+    Exception TryToInvokeAssemblyExistsWithInvalidName()
     {
         Exception result = null;
         try
         {
-            InvokeAssemblyExists(invalidAssemblyName);
+            InvokeAssemblyExists(invalidName);
         }
         catch (Exception exception)
         {

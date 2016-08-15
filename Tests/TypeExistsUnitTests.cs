@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
 using System;
-using System.Runtime.CompilerServices;
 
 [TestClass]
 public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
@@ -12,24 +11,28 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     public void TypeExists_method_should_exist()
     {
         var methodInfo = GetMethod(methodName);
-        var messege = methodName + " method should exist";
+        var messege = methodName + " method should exist.";
         Assert.IsNotNull(methodInfo, messege);
     }
 
     [TestMethod]
-    public void TypeExists_should_accept_two_parameters()
+    public void TypeExists_should_take_two_parameters()
     {
         var expected = 2;
-        var actual = GetParameters(methodName).Length;
-        Assert.AreEqual(expected, actual, methodName + " should accept one parameter.");
+        var parameters = GetParameters(methodName);
+        var actual = parameters.Length;
+        var message = methodName + " should take two parameters.";
+        Assert.AreEqual(expected, actual, message);
     }
 
     [TestMethod]
     public void TypeExists_should_accept_an_extention_parameter()
     {
         var methodInfo = GetMethod(methodName);
-        var isExtention = methodInfo.IsDefined(typeof(ExtensionAttribute), false);
-        Assert.IsTrue(isExtention, message: methodName + " should accept an extention parameter.");
+        var type = typeof(System.Runtime.CompilerServices.ExtensionAttribute);
+        var isExtention = methodInfo.IsDefined(type, false);
+        var message = methodName + " should accept an extention parameter.";
+        Assert.IsTrue(isExtention, message);
     }
 
     [TestMethod]
@@ -83,32 +86,50 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void TypeExists_should_return_the_correct_type_with_a_valid_typeName()
     {
-        var assembly = GetAssembly(assemblyName);
-        var methodInfo = GetMethod(methodName: methodName);
         var expected = typeName;
-        var actual = ((Type)methodInfo.Invoke(null, new object[] { assembly, typeName })).Name;
-        Assert.AreEqual(expected, actual, methodName + " should return the correct type with a valid typeName.");
+        var type = InvokeTypeExists(typeName);
+        var actual = type.Name;
+        var messege = methodName + " should return the correct type with a valid typeName.";
+        Assert.AreEqual(expected, actual, messege);
     }
 
     [TestMethod]
     public void TypeExists_should_throw_an_AssertFailedException_with_an_invalid_typeName()
     {
-        var value = GetTypeWithInvalidName();
+        var value = TryInvokeTypeExistsWithInvalidName();
         var expectedType = typeof(AssertFailedException);
-        Assert.IsInstanceOfType(value, expectedType);
+        var message = methodName + " should throw an assert failed exception with an invalid typeName.";
+        Assert.IsInstanceOfType(value, expectedType, message);
     }
 
-    Exception GetTypeWithInvalidName()
+    [TestMethod]
+    public void TypeExists_error_message_should_be_type_should_exist()
     {
+        var actualException = TryInvokeTypeExistsWithInvalidName();
+        var actual = actualException.Message;
+        var expected = invalidName + " type should exist.";
+        var message = methodName + " error message should be " + expected;
+        Assert.AreEqual(expected, actual, message);
+    }
+
+    Type InvokeTypeExists(string invokedTypeName)
+    {
+        var methodInfo = GetMethod(methodName);
         var assembly = GetAssembly(assemblyName);
-        var methodInfo = GetMethod(methodName: methodName);
+        var parameters = new object[] { assembly, invokedTypeName };
+        return (Type)methodInfo.Invoke(null, parameters);
+    }
+
+    Exception TryInvokeTypeExistsWithInvalidName()
+    {
         Exception actualException = null;
         try
         {
-            methodInfo.Invoke(null, new object[] { assembly, "invalidTypeName" });
+            InvokeTypeExists(invalidName);
         }
         catch (TargetInvocationException exception)
         {
+            //Return InnerException to skip the target of the invocation layer.
             actualException = exception.InnerException;
         }
         return actualException;

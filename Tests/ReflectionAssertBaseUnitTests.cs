@@ -7,6 +7,7 @@ public class ReflectionAssertBaseUnitTests
 {
     public string assemblyName = "MGN.ReflectionAssert";
     public string typeName = "ReflectionAssert";
+    public string invalidName = "InvalidName";
 
     [TestMethod]
     public void MGN_ReflectionAssert_assembly_should_exist()
