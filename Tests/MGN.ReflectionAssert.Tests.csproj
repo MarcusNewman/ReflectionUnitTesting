@@ -50,7 +50,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ReflectionAssertUnitTests.cs" />
+    <Compile Include="MethodExistsUnitTests.cs" />
+    <Compile Include="TypeExistsUnitTests.cs" />
+    <Compile Include="AssemblyExistsUnitTests.cs" />
+    <Compile Include="ReflectionAssertBaseUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Choose>
