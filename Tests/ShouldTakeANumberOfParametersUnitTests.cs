@@ -5,7 +5,7 @@ using System;
 [TestClass]
 public class ShouldTakeANumberOfParametersUnitTests : ReflectionAssertBaseUnitTests
 {
-    int invalidNumberOfParameters = 1;
+    int invalidNumberOfParameters = 10;
     string methodName = "ShouldTakeANumberOfParameters";
 
     [TestMethod]
@@ -125,7 +125,7 @@ public class ShouldTakeANumberOfParametersUnitTests : ReflectionAssertBaseUnitTe
     {
         var actualException = TryInvokeShouldTakeANumberOfParametersWithInvalidNumberOfParameters();
         var actual = actualException.Message;
-        var expected = methodName + " should take " + Pluralize("parameter", invalidNumberOfParameters);
+        var expected = String.Format("{0} should take {1}.", methodName, Pluralize("parameter", invalidNumberOfParameters));
         var message = methodName + " error message should be " + expected;
         Assert.AreEqual(expected, actual, message);
     }

@@ -43,7 +43,7 @@ public class ReflectionAssertBaseUnitTests
 
     public string Pluralize(string itemName, int count)
     {
-        return String.Format("{0} {1}{2}.", count, itemName, count == 1 ? "" : "s");
+        return String.Format("{0} {1}{2}", count, itemName, count == 1 ? "" : "s");
     }
 
     public Assembly GetAssembly(string assemblyName)
