@@ -10,19 +10,13 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void MethodExistsMethodShouldExist()
     {
-        var methodInfo = GetMethod(methodName);
-        var messege = methodName + " method should exist.";
-        Assert.IsNotNull(methodInfo, messege);
+        MethodShouldExist(methodName);
     }
 
     [TestMethod]
-    public void MethodExistsShouldAcceptTwoParameters()
+    public void MethodExistsShouldTakeTwoParameters()
     {
-        var expected = 2;
-        var parameter = GetParameters(methodName);
-        var actual = parameter.Length;
-        var messege = methodName + " should accept two parameters.";
-        Assert.AreEqual(expected, actual, messege);
+        MethodShouldTakeNumberOfParameters(methodName, 2);
     }
 
     [TestMethod]

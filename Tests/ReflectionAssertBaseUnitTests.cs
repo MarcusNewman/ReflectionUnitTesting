@@ -26,6 +26,26 @@ public class ReflectionAssertBaseUnitTests
         Assert.IsNotNull(type, message);
     }
 
+    public void MethodShouldExist(String methodName)
+    {
+        var methodInfo = GetMethod(methodName);
+        var messege = methodName + " method should exist.";
+        Assert.IsNotNull(methodInfo, messege);
+    }
+
+    public void MethodShouldTakeNumberOfParameters(string methodName, int numberOfParameters)
+    {
+        var parameters = GetParameters(methodName);
+        var actual = parameters.Length;
+        string message = methodName + " should take " + Pluralize("parameter", numberOfParameters);
+        Assert.AreEqual(numberOfParameters, actual, message);
+    }
+
+    public string Pluralize(string itemName, int count)
+    {
+        return String.Format("{0} {1}{2}.", count, itemName, count == 1 ? "" : "s");
+    }
+
     public Assembly GetAssembly(string assemblyName)
     {
         var path = "..\\..\\..\\bin\\Debug\\" + assemblyName;

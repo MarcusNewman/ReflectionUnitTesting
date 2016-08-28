@@ -52,6 +52,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MethodExistsUnitTests.cs" />
+    <Compile Include="ShouldTakeANumberOfParametersUnitTests.cs" />
     <Compile Include="TypeExistsUnitTests.cs" />
     <Compile Include="AssemblyExistsUnitTests.cs" />
     <Compile Include="ReflectionAssertBaseUnitTests.cs" />

@@ -10,21 +10,15 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void AssemblyExistsMethodShouldExist()
     {
-        var methodInfo = GetMethod(methodName);
-        var messege = methodName + " method should exist.";
-        Assert.IsNotNull(methodInfo, messege);
+        MethodShouldExist(methodName);
     }
-
+    
     [TestMethod]
-    public void AssemblyExistsShouldAcceptOneParameter()
-    {
-        var parameters = GetParameters(methodName);
-        var expected = 1;
-        var actual = parameters.Length;
-        var message = methodName + " should accept one parameter.";
-        Assert.AreEqual(expected, actual, message);
+    public void AssemblyExistsShouldTakeOneParameter()
+    {   
+        MethodShouldTakeNumberOfParameters(methodName, 1);
     }
-
+      
     [TestMethod]
     public void AssemblyExistsShouldAcceptAStringParameter()
     {
