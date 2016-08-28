@@ -8,7 +8,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     string methodName = "MethodExists";
 
     [TestMethod]
-    public void MethodExists_method_should_exist()
+    public void MethodExistsMethodShouldExist()
     {
         var methodInfo = GetMethod(methodName);
         var messege = methodName + " method should exist.";
@@ -16,7 +16,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_accept_two_parameters()
+    public void MethodExistsShouldAcceptTwoParameters()
     {
         var expected = 2;
         var parameter = GetParameters(methodName);
@@ -26,7 +26,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_accept_an_extention_parameter()
+    public void MethodExistsShouldAcceptAnExtentionParameter()
     {
         var methodInfo = GetMethod(methodName);
         var type = typeof(System.Runtime.CompilerServices.ExtensionAttribute);
@@ -36,7 +36,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_accept_a_type_parameter()
+    public void MethodExistsShouldAcceptATypeParameter()
     {
         var expected = typeof(Type);
         var parameter = GetParameter(methodName);
@@ -46,7 +46,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_accept_a_first_parameter_named_type()
+    public void MethodExistsShouldAcceptAFirstParameterNamedType()
     {
         var expected = "type";
         var parameter = GetParameter(methodName);
@@ -56,7 +56,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_accept_a_second_parameter_of_type_string()
+    public void MethodExistsShouldAcceptASecondParameterOfTypeString()
     {
         var expected = typeof(string);
         var parameter = GetParameter(methodName, 2);
@@ -66,7 +66,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_accept_a_second_parameter_named_methodName()
+    public void MethodExistsShouldAcceptASecondParameterNamedMethodName()
     {
         var expected = "methodName";
         var parameter = GetParameter(methodName, 2);
@@ -76,7 +76,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_return_a_methodInfo()
+    public void MethodExistsShouldReturnAMethodInfo()
     {
         var expected = typeof(MethodInfo);
         var method = GetMethod(methodName);
@@ -86,7 +86,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_return_the_correct_methodInfo_with_a_valid_methodName()
+    public void MethodExistsShouldReturnTheCorrectMethodInfoWithAValidMethodName()
     {
         var expected = methodName;
         var methodInfo = InvokeMethodExists(methodName);
@@ -96,7 +96,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_should_throw_an_AssertFailedException_with_an_invalid_methodName()
+    public void MethodExistsShouldThrowAnAssertFailedExceptionWithAnInvalidMethodName()
     {
         var expectedType = typeof(AssertFailedException);
         var value = TryInvokeMethodExistsWithInvalidName();
@@ -105,7 +105,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExists_error_message_should_be_method_should_exist()
+    public void MethodExistsErrorMessageShouldBeMethodShouldExist()
     {
         var actualException = TryInvokeMethodExistsWithInvalidName();
         var actual = actualException.Message;

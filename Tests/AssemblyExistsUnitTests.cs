@@ -8,7 +8,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     string methodName = "AssemblyExists";
 
     [TestMethod]
-    public void AssemblyExists_method_should_exist()
+    public void AssemblyExistsMethodShouldExist()
     {
         var methodInfo = GetMethod(methodName);
         var messege = methodName + " method should exist.";
@@ -16,7 +16,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExists_should_accept_one_parameter()
+    public void AssemblyExistsShouldAcceptOneParameter()
     {
         var parameters = GetParameters(methodName);
         var expected = 1;
@@ -26,7 +26,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExists_should_accept_a_string_parameter()
+    public void AssemblyExistsShouldAcceptAStringParameter()
     {
         var parameter = GetParameter(methodName);
         var expected = typeof(string);
@@ -36,7 +36,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExists_should_accept_a_parameter_named_assemblyName()
+    public void AssemblyExistsShouldAcceptAParameterNamedAssemblyName()
     {
         var parameter = GetParameter(methodName);
         var expected = "assemblyName";
@@ -46,7 +46,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExists_should_be_static()
+    public void AssemblyExistsShouldBeStatic()
     {
         var methodInfo = GetMethod(methodName);
         var isStatic = methodInfo.IsStatic;
@@ -55,7 +55,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExists_should_return_an_assembly()
+    public void AssemblyExistsShouldReturnAnAssembly()
     {
         var methodInfo = GetMethod(methodName);
         var actual = methodInfo.ReturnType;
@@ -65,17 +65,17 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExists_should_return_the_correct_assembly_with_a_valid_assembly_name()
+    public void AssemblyExistsShouldReturnTheCorrectAssemblyWithAValidAssemblyName()
     {
         var assembly = InvokeAssemblyExists(assemblyName);
-        var actual = assembly.GetName().Name;
+        var actual = assembly.ManifestModule.Name;
         var expected = assemblyName;
         var message = methodName + " should return the correct assembly with a valid assemblyName.";
         Assert.AreEqual(actual, expected, message);
     }
 
     [TestMethod]
-    public void AssemblyExists_should_throw_an_AssertFailedException_if_the_assembly_is_not_found()
+    public void AssemblyExistsShouldThrowAnAssertFailedExceptionIfTheAssemblyIsNotFound()
     {
         var actualException = TryToInvokeAssemblyExistsWithInvalidName();
         var expectedType = typeof(AssertFailedException);
@@ -84,7 +84,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExists_error_message_should_be_assembly_should_exist()
+    public void AssemblyExistsErrorMessageShouldBeAssemblyShouldExist()
     {
         var actualException = TryToInvokeAssemblyExistsWithInvalidName();
         var actual = actualException.Message;
@@ -94,7 +94,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExists_error_should_contain_the_InnerException()
+    public void AssemblyExistsErrorShouldContainTheInnerException()
     {
         var actualException = TryToInvokeAssemblyExistsWithInvalidName();
         var value = actualException.InnerException;

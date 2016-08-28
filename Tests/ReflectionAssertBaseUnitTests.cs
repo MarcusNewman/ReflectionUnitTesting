@@ -5,13 +5,13 @@ using System;
 [TestClass]
 public class ReflectionAssertBaseUnitTests
 {
-    public string assemblyName = "ReflectionUnitTesting";
+    public string assemblyName = "ReflectionUnitTesting.dll";
     public string namespaceName = "ReflectionUnitTesting";
     public string typeName = "ReflectionAssert";
     public string invalidName = "InvalidName";
 
     [TestMethod]
-    public void MGN_ReflectionAssert_assembly_should_exist()
+    public void ReflectionUnitTestingDllAssemblyShouldExist()
     {
         var assembly = GetAssembly(assemblyName);
         var message = assemblyName + " assembly should exist.";
@@ -19,7 +19,7 @@ public class ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void ReflectionAssert_type_should_exist()
+    public void ReflectionAssertTypeShouldExist()
     {
         var type = GetType(namespaceName, typeName);
         var message = typeName + " type should exist.";
@@ -28,7 +28,7 @@ public class ReflectionAssertBaseUnitTests
 
     public Assembly GetAssembly(string assemblyName)
     {
-        var path = string.Format("..\\..\\..\\bin\\Debug\\{0}.dll", assemblyName);
+        var path = "..\\..\\..\\bin\\Debug\\" + assemblyName;
         return Assembly.LoadFrom(path);
     }
 

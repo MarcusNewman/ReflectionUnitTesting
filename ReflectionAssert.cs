@@ -16,7 +16,7 @@ namespace ReflectionUnitTesting
         /// <returns></returns>
         public static Assembly AssemblyExists(string assemblyName)
         {
-            var path = string.Format("..\\..\\..\\bin\\Debug\\{0}.dll", assemblyName);
+            var path = "..\\..\\..\\bin\\Debug\\" + assemblyName;
             try
             {
                 return Assembly.LoadFrom(path);
