@@ -16,12 +16,12 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void TypeExists_should_take_two_parameters()
+    public void TypeExists_should_take_three_parameters()
     {
-        var expected = 2;
+        var expected = 3;
         var parameters = GetParameters(methodName);
         var actual = parameters.Length;
-        var message = methodName + " should take two parameters.";
+        var message = methodName + " should take three parameters.";
         Assert.AreEqual(expected, actual, message);
     }
 
@@ -58,7 +58,7 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void TypeExists_should_accept_a_second_parameter_of_type_string()
     {
-        var parameter = GetParameter(methodName, 1);
+        var parameter = GetParameter(methodName, 2);
         var expected = typeof(string);
         var actual = parameter.ParameterType;
         var message = methodName + " should accept an string parameter.";
@@ -66,9 +66,28 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void TypeExists_should_accept_a_second_parameter_named_typeName()
+    public void TypeExists_should_accept_a_second_parameter_named_namespaceName()
     {
-        var parameter = GetParameter(methodName, 1);
+        var parameter = GetParameter(methodName, 2);
+        var expected = "namespaceName";
+        var actual = parameter.Name;
+        var message = methodName + " should accept a parameter named " + expected + ".";
+        Assert.AreEqual(expected, actual, message);
+    }
+    [TestMethod]
+    public void TypeExists_should_accept_a_third_parameter_of_type_string()
+    {
+        var parameter = GetParameter(methodName, 3);
+        var expected = typeof(string);
+        var actual = parameter.ParameterType;
+        var message = methodName + " should accept an string parameter.";
+        Assert.AreEqual(expected, actual, message);
+    }
+
+    [TestMethod]
+    public void TypeExists_should_accept_a_third_parameter_named_typeName()
+    {
+        var parameter = GetParameter(methodName, 3);
         var expected = "typeName";
         var actual = parameter.Name;
         var message = methodName + " should accept a parameter named " + expected + ".";
@@ -87,7 +106,7 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     public void TypeExists_should_return_the_correct_type_with_a_valid_typeName()
     {
         var expected = typeName;
-        var type = InvokeTypeExists(typeName);
+        var type = InvokeTypeExists(namespaceName, typeName);
         var actual = type.Name;
         var messege = methodName + " should return the correct type with a valid typeName.";
         Assert.AreEqual(expected, actual, messege);
@@ -112,11 +131,11 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
         Assert.AreEqual(expected, actual, message);
     }
 
-    Type InvokeTypeExists(string invokedTypeName)
+    Type InvokeTypeExists(string invokedNamespaceName, string invokedTypeName)
     {
         var methodInfo = GetMethod(methodName);
         var assembly = GetAssembly(assemblyName);
-        var parameters = new object[] { assembly, invokedTypeName };
+        var parameters = new object[] { assembly, invokedNamespaceName, invokedTypeName };
         return (Type)methodInfo.Invoke(null, parameters);
     }
 
@@ -125,7 +144,7 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
         Exception actualException = null;
         try
         {
-            InvokeTypeExists(invalidName);
+            InvokeTypeExists(namespaceName, invalidName);
         }
         catch (TargetInvocationException exception)
         {

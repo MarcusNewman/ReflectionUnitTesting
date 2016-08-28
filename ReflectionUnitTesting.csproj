@@ -7,10 +7,11 @@
     <ProjectGuid>{A19C625E-BC49-4EDB-997B-8C45FE4C48D2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MGN.ReflectionAssert</RootNamespace>
-    <AssemblyName>MGN.ReflectionAssert</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>ReflectionUnitTesting</RootNamespace>
+    <AssemblyName>ReflectionUnitTesting</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

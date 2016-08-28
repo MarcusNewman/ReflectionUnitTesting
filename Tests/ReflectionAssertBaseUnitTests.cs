@@ -5,7 +5,8 @@ using System;
 [TestClass]
 public class ReflectionAssertBaseUnitTests
 {
-    public string assemblyName = "MGN.ReflectionAssert";
+    public string assemblyName = "ReflectionUnitTesting";
+    public string namespaceName = "ReflectionUnitTesting";
     public string typeName = "ReflectionAssert";
     public string invalidName = "InvalidName";
 
@@ -20,26 +21,27 @@ public class ReflectionAssertBaseUnitTests
     [TestMethod]
     public void ReflectionAssert_type_should_exist()
     {
-        var type = GetType(typeName);
+        var type = GetType(namespaceName, typeName);
         var message = typeName + " type should exist.";
         Assert.IsNotNull(type, message);
     }
 
     public Assembly GetAssembly(string assemblyName)
     {
-        var path = string.Format("..\\..\\..\\bin\\Debug\\{0}.dll", assemblyName);        
-        return Assembly.LoadFrom(path); 
+        var path = string.Format("..\\..\\..\\bin\\Debug\\{0}.dll", assemblyName);
+        return Assembly.LoadFrom(path);
     }
 
-    public Type GetType(string typeName)
+    public Type GetType(string namespaceName, string typeName)
     {
         var assembly = GetAssembly(assemblyName);
-        return assembly.GetType(typeName);
+        var fullTypeName = namespaceName + '.' + typeName;
+        return assembly.GetType(fullTypeName);
     }
 
     public MethodInfo GetMethod(string methodName)
     {
-        var classType = GetType(typeName);
+        var classType = GetType(namespaceName, typeName);
         return classType.GetMethod(methodName);
     }
 
@@ -49,8 +51,9 @@ public class ReflectionAssertBaseUnitTests
         return methodInfo.GetParameters();
     }
 
-    public ParameterInfo GetParameter(string methodName, int parameter = 0)
+    public ParameterInfo GetParameter(string methodName, int parameter = 1)
     {
+        parameter--;
         var parameters = GetParameters(methodName);
         if (parameter > parameters.Length) return null;
         return parameters[parameter];

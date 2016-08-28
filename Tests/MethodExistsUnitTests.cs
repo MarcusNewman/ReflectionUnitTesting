@@ -59,7 +59,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     public void MethodExists_should_accept_a_second_parameter_of_type_string()
     {
         var expected = typeof(string);
-        var parameter = GetParameter(methodName, 1);
+        var parameter = GetParameter(methodName, 2);
         var actual = parameter.ParameterType;
         var message = methodName + " should accept an string parameter.";
         Assert.AreEqual(expected, actual, message);
@@ -69,7 +69,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     public void MethodExists_should_accept_a_second_parameter_named_methodName()
     {
         var expected = "methodName";
-        var parameter = GetParameter(methodName, 1);
+        var parameter = GetParameter(methodName, 2);
         var actual = parameter.Name;
         var message = methodName + " should accept a parameter named " + expected + ".";
         Assert.AreEqual(expected, actual, message);
@@ -117,7 +117,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     MethodInfo InvokeMethodExists(string invokedMethodName)
     {
         var methodInfo = GetMethod(methodName);
-        var type = GetType(typeName);
+        var type = GetType(namespaceName, typeName);
         var parameters = new object[] { type, invokedMethodName };
         return (MethodInfo)methodInfo.Invoke(null, parameters);
     }
