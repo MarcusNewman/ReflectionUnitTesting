@@ -3,7 +3,7 @@ using System.Reflection;
 using System;
 
 [TestClass]
-public class ShouldTakeANumberOfParametersUnitTests : ReflectionAssertBaseUnitTests
+public class ShouldTakeANumberOfParametersUnitTests : ReflectionAssertUnitTests
 {
     int invalidNumberOfParameters = 10;
     string methodName = "ShouldTakeANumberOfParameters";

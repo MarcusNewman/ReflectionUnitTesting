@@ -3,15 +3,16 @@ using System.Reflection;
 using System;
 
 [TestClass]
-public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
+public class ReflectionAssertUnitTests : ReflectionAssertBaseUnitTests
 {
-    string typeName = "TypeExists";
+    public string typeName = "ReflectionAssert";
 
     [TestMethod]
-    public void TypeExistsTypeShouldExist()
+    public void ReflectionAssertTypeShouldExist()
     {
         var type = GetType(namespaceName, typeName);
         var message = typeName + " type should exist.";
         Assert.IsNotNull(type, message);
     }
+
 }

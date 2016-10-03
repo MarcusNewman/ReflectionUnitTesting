@@ -3,7 +3,7 @@ using System.Reflection;
 using System;
 
 [TestClass]
-public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
+public class AssemblyExistsUnitTests : ReflectionAssertUnitTests
 {
     string methodName = "AssemblyExists";
 
@@ -42,7 +42,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void AssemblyExistsShouldBeStatic()
     {
-        var methodInfo = GetMethod(methodName);
+        var methodInfo = GetMethod(typeName, methodName);
         var isStatic = methodInfo.IsStatic;
         var message = methodName + " should be static.";
         Assert.IsTrue(isStatic, message);
@@ -51,7 +51,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void AssemblyExistsShouldReturnAnAssembly()
     {
-        var methodInfo = GetMethod(methodName);
+        var methodInfo = GetMethod(typeName, methodName);
         var actual = methodInfo.ReturnType;
         var expected = typeof(Assembly);
         var message = methodName + " should return an Assembly.";
@@ -98,7 +98,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
 
     Assembly InvokeAssemblyExists(string assemblyName)
     {
-        var methodInfo = GetMethod(methodName);
+        var methodInfo = GetMethod(typeName, methodName);
         var parameters = new object[] { assemblyName };
         return (Assembly)methodInfo.Invoke(null, parameters);
     }

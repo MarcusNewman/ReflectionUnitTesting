@@ -7,7 +7,6 @@ public class ReflectionAssertBaseUnitTests
 {
     public string assemblyName = "ReflectionUnitTesting.dll";
     public string namespaceName = "ReflectionUnitTesting";
-    public string typeName = "ReflectionAssert";
     public string invalidName = "InvalidName";
 
     [TestMethod]
@@ -18,17 +17,9 @@ public class ReflectionAssertBaseUnitTests
         Assert.IsNotNull(assembly, message);
     }
 
-    [TestMethod]
-    public void ReflectionAssertTypeShouldExist()
+    public void MethodShouldExist(string typeName, string methodName)
     {
-        var type = GetType(namespaceName, typeName);
-        var message = typeName + " type should exist.";
-        Assert.IsNotNull(type, message);
-    }
-
-    public void MethodShouldExist(String methodName)
-    {
-        var methodInfo = GetMethod(methodName);
+        var methodInfo = GetMethod(typeName, methodName);
         var messege = methodName + " method should exist.";
         Assert.IsNotNull(methodInfo, messege);
     }
@@ -41,17 +32,6 @@ public class ReflectionAssertBaseUnitTests
         Assert.AreEqual(numberOfParameters, actual, message);
     }
 
-    public string Pluralize(string itemName, int count)
-    {
-        return String.Format("{0} {1}{2}", count, itemName, count == 1 ? "" : "s");
-    }
-
-    public Assembly GetAssembly(string assemblyName)
-    {
-        var path = "..\\..\\..\\bin\\Debug\\" + assemblyName;
-        return Assembly.LoadFrom(path);
-    }
-
     public Type GetType(string namespaceName, string typeName)
     {
         var assembly = GetAssembly(assemblyName);
@@ -59,15 +39,15 @@ public class ReflectionAssertBaseUnitTests
         return assembly.GetType(fullTypeName);
     }
 
-    public MethodInfo GetMethod(string methodName)
+    public MethodInfo GetMethod(string typeName, string methodName)
     {
         var classType = GetType(namespaceName, typeName);
         return classType.GetMethod(methodName);
     }
 
-    public ParameterInfo[] GetParameters(string methodName)
+    public ParameterInfo[] GetParameters(string typeName, string methodName)
     {
-        var methodInfo = GetMethod(methodName);
+        var methodInfo = GetMethod(typeName, methodName);
         return methodInfo.GetParameters();
     }
 
@@ -77,5 +57,16 @@ public class ReflectionAssertBaseUnitTests
         var parameters = GetParameters(methodName);
         if (parameter > parameters.Length) return null;
         return parameters[parameter];
+    }
+
+    public string Pluralize(string itemName, int count)
+    {
+        return String.Format("{0} {1}{2}", count, itemName, count == 1 ? "" : "s");
+    }
+
+    public Assembly GetAssembly(string assemblyName)
+    {
+        var path = "..\\..\\..\\bin\\Debug\\" + assemblyName;
+        return Assembly.LoadFrom(path);
     }
 }

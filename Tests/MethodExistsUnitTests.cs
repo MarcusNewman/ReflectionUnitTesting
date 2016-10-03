@@ -3,7 +3,7 @@ using System.Reflection;
 using System;
 
 [TestClass]
-public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
+public class MethodExistsUnitTests : ReflectionAssertUnitTests
 {
     string methodName = "MethodExists";
 
@@ -22,7 +22,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     [TestMethod]
     public void MethodExistsShouldAcceptAnExtentionParameter()
     {
-        var methodInfo = GetMethod(methodName);
+        var methodInfo = GetMethod(typeName, methodName);
         var type = typeof(System.Runtime.CompilerServices.ExtensionAttribute);
         var isExtention = methodInfo.IsDefined(type, false);
         var message = methodName + " should accept an extention parameter.";
@@ -73,7 +73,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     public void MethodExistsShouldReturnAMethodInfo()
     {
         var expected = typeof(MethodInfo);
-        var method = GetMethod(methodName);
+        var method = GetMethod(typeName, methodName);
         var actual = method.ReturnType;
         var messege = methodName + " should return a MethodInfo.";
         Assert.AreEqual(expected, actual, messege);
@@ -110,7 +110,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
 
     MethodInfo InvokeMethodExists(string invokedMethodName)
     {
-        var methodInfo = GetMethod(methodName);
+        var methodInfo = GetMethod(typeName, methodName);
         var type = GetType(namespaceName, typeName);
         var parameters = new object[] { type, invokedMethodName };
         return (MethodInfo)methodInfo.Invoke(null, parameters);
