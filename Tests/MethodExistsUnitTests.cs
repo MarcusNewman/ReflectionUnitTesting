@@ -9,17 +9,17 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     string methodName = "MethodExists";
 
     [TestMethod]
-    public void MethodExistsMethodShouldExist()
+    public void MethodShouldExist()
     {
-        GetTypeExistsMethod();
+        GetMethod();
     }
 
-    public MethodInfo GetTypeExistsMethod()
+    public MethodInfo GetMethod()
     {
         return GetMethod(
             methodName: methodName,
             shouldBeStatic: true,
-            shouldReturnType: typeof(MethodInfo),
+            expectedReturnType: typeof(MethodInfo),
             shouldBeAnExtentionMethod: true,
             parameterTypesAndNames: new List<Tuple<Type, string>>() {
                 Tuple.Create(typeof(Type), "type"),
@@ -31,7 +31,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExistsShouldReturnTheCorrectMethodInfoWithAValidMethodName()
+    public void ShouldReturnTheCorrectMethodInfoWithAValidMethodName()
     {
         var expected = methodName;
         var methodInfo = InvokeMethodExists(methodName);
@@ -41,7 +41,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExistsShouldThrowAnAssertFailedExceptionWithAnInvalidMethodName()
+    public void ShouldThrowAnAssertFailedExceptionWithAnInvalidMethodName()
     {
         var expectedType = typeof(AssertFailedException);
         var value = TryInvokeMethodExists(invalidName);
@@ -50,7 +50,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void MethodExistsErrorMessageShouldBeMethodShouldExist()
+    public void ErrorMessageShouldBeMethodShouldExist()
     {
         var actualException = TryInvokeMethodExists(invalidName);
         var actual = actualException.Message;

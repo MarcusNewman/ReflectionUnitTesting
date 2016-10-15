@@ -123,7 +123,34 @@ namespace ReflectionUnitTesting
                     counter++;
                 }
             }
-            return methodInfo;            
+            return methodInfo;
+        }
+
+        /// <summary>
+        /// MethodInfo extension method that invokes a method and tests for expected behavior
+        /// </summary>
+        /// <param name="methodInfo">Extention parameter for the calling method.</param>
+        /// <param name="parameters">Parameters used when invoking the method.</param>
+        /// <param name="expectedResult">Expected value or exception.</param>
+        /// <exception cref="AssertFailedException">Thrown if the method does not return the expected result.</exception>
+        public static void TestMethod(this MethodInfo methodInfo, object obj, object[] parameters, object expectedResult)
+        {
+            object result = null;
+            Exception actualException = null;
+            try
+            {
+                result = methodInfo.Invoke(obj, parameters);
+            }
+            catch (Exception exception)
+            {
+                actualException = exception;
+            }
+            if (expectedResult is Exception)
+            {
+                if (actualException == null) throw new AssertFailedException("Method did not throw expected exception.");
+                if ((expectedResult as Exception).Message != actualException.Message) throw new AssertFailedException("Method did not throw expected exception of " + expectedResult);
+            }
+            else if (result != expectedResult) throw new AssertFailedException(result + " did not match expected result of " + expectedResult);
         }
     }
 }

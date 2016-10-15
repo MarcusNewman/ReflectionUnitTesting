@@ -37,7 +37,7 @@ public class ReflectionAssertBaseUnitTests
         return type;
     }
 
-    public MethodInfo GetMethod(string methodName, bool? shouldBeStatic = null, Type shouldReturnType = null, bool? shouldBeAnExtentionMethod = null, List<Tuple<Type, string>> parameterTypesAndNames = null)
+    public MethodInfo GetMethod(string methodName, bool? shouldBeStatic = null, Type expectedReturnType = null, bool? shouldBeAnExtentionMethod = null, List<Tuple<Type, string>> parameterTypesAndNames = null)
     {
         var methodInfo = GetType(typeName).GetMethod(methodName);
         var message = methodName + " method should exist.";
@@ -50,11 +50,11 @@ public class ReflectionAssertBaseUnitTests
             Assert.AreEqual(isStatic, shouldBeStatic.Value, message);
         }
 
-        if (shouldReturnType != null)
+        if (expectedReturnType != null)
         {
             var returnType = methodInfo.ReturnType;
-            message = methodName + " return type should be: " + shouldReturnType.Name;
-            Assert.AreEqual(shouldReturnType, returnType, message);
+            message = methodName + " return type should be: " + expectedReturnType.Name;
+            Assert.AreEqual(expectedReturnType, returnType, message);
         }
 
         if (shouldBeAnExtentionMethod.HasValue)

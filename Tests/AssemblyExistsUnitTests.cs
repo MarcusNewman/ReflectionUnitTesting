@@ -79,7 +79,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
         return GetMethod(
                     methodName: methodName,
                     shouldBeStatic: true,
-                    shouldReturnType: typeof(Assembly),
+                    expectedReturnType: typeof(Assembly),
                     parameterTypesAndNames: new List<Tuple<Type, string>>() { Tuple.Create(typeof(string), "assemblyName") }
                     );
     }

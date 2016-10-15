@@ -56,6 +56,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TestMethodUnitTests.cs" />
     <Compile Include="TypeExistsUnitTests.cs" />
     <Compile Include="MethodExistsUnitTests.cs" />
     <Compile Include="AssemblyExistsUnitTests.cs" />
