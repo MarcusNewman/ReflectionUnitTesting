@@ -37,6 +37,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Utils">
+      <HintPath>..\..\Utils\bin\Debug\Utils.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -53,13 +56,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MethodExistsUnitTests.cs" />
-    <Compile Include="ShouldTakeANumberOfParametersUnitTests.cs" />
     <Compile Include="TypeExistsUnitTests.cs" />
+    <Compile Include="MethodExistsUnitTests.cs" />
     <Compile Include="AssemblyExistsUnitTests.cs" />
     <Compile Include="ReflectionAssertBaseUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MemberExistsUnitTests.cs" />
     <Compile Include="ReflectionAssertUnitTests.cs" />
   </ItemGroup>
   <Choose>

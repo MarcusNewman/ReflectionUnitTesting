@@ -1,61 +1,17 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
 using System;
+using System.Collections.Generic;
 
 [TestClass]
-public class AssemblyExistsUnitTests : ReflectionAssertUnitTests
+public class AssemblyExistsUnitTests : ReflectionAssertBaseUnitTests
 {
     string methodName = "AssemblyExists";
 
     [TestMethod]
     public void AssemblyExistsMethodShouldExist()
     {
-        MethodShouldExist(methodName);
-    }
-    
-    [TestMethod]
-    public void AssemblyExistsShouldTakeOneParameter()
-    {   
-        MethodShouldTakeNumberOfParameters(methodName, 1);
-    }
-      
-    [TestMethod]
-    public void AssemblyExistsShouldAcceptAStringParameter()
-    {
-        var parameter = GetParameter(methodName);
-        var expected = typeof(string);
-        var actual = parameter.ParameterType;
-        var message = methodName + " should accept a string parameter.";
-        Assert.AreEqual(expected, actual, message);
-    }
-
-    [TestMethod]
-    public void AssemblyExistsShouldAcceptAParameterNamedAssemblyName()
-    {
-        var parameter = GetParameter(methodName);
-        var expected = "assemblyName";
-        var actual = parameter.Name;
-        var message = methodName + " should accept a parameter named " + expected + ".";
-        Assert.AreEqual(expected, actual, message);
-    }
-
-    [TestMethod]
-    public void AssemblyExistsShouldBeStatic()
-    {
-        var methodInfo = GetMethod(typeName, methodName);
-        var isStatic = methodInfo.IsStatic;
-        var message = methodName + " should be static.";
-        Assert.IsTrue(isStatic, message);
-    }
-
-    [TestMethod]
-    public void AssemblyExistsShouldReturnAnAssembly()
-    {
-        var methodInfo = GetMethod(typeName, methodName);
-        var actual = methodInfo.ReturnType;
-        var expected = typeof(Assembly);
-        var message = methodName + " should return an Assembly.";
-        Assert.AreEqual(actual, expected, message);
+        GetAssemblyExistsMethod();
     }
 
     [TestMethod]
@@ -98,7 +54,7 @@ public class AssemblyExistsUnitTests : ReflectionAssertUnitTests
 
     Assembly InvokeAssemblyExists(string assemblyName)
     {
-        var methodInfo = GetMethod(typeName, methodName);
+        var methodInfo = GetAssemblyExistsMethod();
         var parameters = new object[] { assemblyName };
         return (Assembly)methodInfo.Invoke(null, parameters);
     }
@@ -118,4 +74,13 @@ public class AssemblyExistsUnitTests : ReflectionAssertUnitTests
         return result;
     }
 
+    public MethodInfo GetAssemblyExistsMethod()
+    {
+        return GetMethod(
+                    methodName: methodName,
+                    shouldBeStatic: true,
+                    shouldReturnType: typeof(Assembly),
+                    parameterTypesAndNames: new List<Tuple<Type, string>>() { Tuple.Create(typeof(string), "assemblyName") }
+                    );
+    }
 }
