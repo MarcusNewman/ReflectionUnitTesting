@@ -2,6 +2,7 @@
 using System.Reflection;
 using System;
 using System.Collections.Generic;
+using Utils;
 
 [TestClass]
 public class ReflectionAssertBaseUnitTests
@@ -69,7 +70,7 @@ public class ReflectionAssertBaseUnitTests
         {
             var expectedParameterLength = parameterTypesAndNames.Count;
             var actualParameters = methodInfo.GetParameters();
-            message = string.Format(methodName + " should take {0} {1}.", expectedParameterLength, "parameter");
+            message = string.Format(methodName + " should take {0}.", StringUtils.Pluralize(expectedParameterLength, "parameter"));
             Assert.AreEqual(expectedParameterLength, actualParameters.Length, message);
             var counter = 0;
             foreach (var parameter in parameterTypesAndNames)

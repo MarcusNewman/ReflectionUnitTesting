@@ -2,6 +2,7 @@
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Utils;
 
 namespace ReflectionUnitTesting
 {
@@ -104,7 +105,7 @@ namespace ReflectionUnitTesting
                 var actualParameters = methodInfo.GetParameters();
                 if (expectedParameterLength != actualParameters.Length)
                 {
-                    msg = string.Format(methodName + " should take {0} {1}.", expectedParameterLength, "parameter");
+                    msg = string.Format(methodName + " should take {0}.", StringUtils.Pluralize(expectedParameterLength, "parameter"));
                     throw new AssertFailedException(msg);
                 }
                 var counter = 0;

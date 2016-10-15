@@ -2,6 +2,7 @@
 using System.Reflection;
 using System;
 using System.Collections.Generic;
+using Utils;
 
 [TestClass]
 public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
@@ -119,7 +120,7 @@ public class MethodExistsUnitTests : ReflectionAssertBaseUnitTests
         Assert.IsInstanceOfType(value, expectedType, message);
 
         var actual = value.Message;
-        var expected = string.Format(methodName + " should take {0} {1}.", parameterTypesAndNames.Count, "parameter");
+        var expected = string.Format(methodName + " should take {0}.", StringUtils.Pluralize(parameterTypesAndNames.Count, "parameter"));
         message = methodName + " error message should be " + expected;
         Assert.AreEqual(expected, actual, message);
     }
