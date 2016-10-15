@@ -150,7 +150,7 @@ namespace ReflectionUnitTesting
                 if (actualException == null) throw new AssertFailedException("Method did not throw expected exception.");
                 if ((expectedResult as Exception).Message != actualException.Message) throw new AssertFailedException("Method did not throw expected exception of " + expectedResult);
             }
-            else if (result != expectedResult) throw new AssertFailedException(result + " did not match expected result of " + expectedResult);
+            else if (!Equals(result, expectedResult)) throw new AssertFailedException(result + " did not match expected result of " + expectedResult);
         }
     }
 }
