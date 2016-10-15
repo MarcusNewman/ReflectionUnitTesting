@@ -34,7 +34,7 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     }
 
     [TestMethod]
-    public void AssemblyExistsErrorMessageShouldBeAssemblyShouldExist()
+    public void TypeExistsErrorMessageShouldBeAssemblyShouldExist()
     {
         var actualException = TryToInvokeTypeExistsWithInvalidName();
         var actual = actualException.Message;
@@ -46,7 +46,7 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     Type InvokeTypeExists(string typeName)
     {
         var methodInfo = GetTypeExistsMethod();
-        var parameters = new object[] { GetAssembly(), namespaceName, typeName };
+        var parameters = new object[] { GetAssembly(), typeName, namespaceName };
         return (Type)methodInfo.Invoke(null, parameters);
     }
 
@@ -68,14 +68,13 @@ public class TypeExistsUnitTests : ReflectionAssertBaseUnitTests
     public MethodInfo GetTypeExistsMethod()
     {
         return GetMethod(
-                    methodName: methodName,
-                    shouldBeStatic: true,
-                    expectedReturnType: typeof(Type),
-                    shouldBeAnExtentionMethod: true,
-                    parameterTypesAndNames: new List<Tuple<Type, string>>() {
-                        Tuple.Create(typeof(Assembly), "assembly"),
-                        Tuple.Create(typeof(string), "namespaceName"),
-                        Tuple.Create(typeof(string), "typeName") }
-                    );
+            methodName: methodName,
+            shouldBeStatic: true,
+            expectedReturnType: typeof(Type),
+            shouldBeAnExtentionMethod: true,
+            parameterTypesAndNames: new List<Tuple<Type, string>>() {
+                Tuple.Create(typeof(Assembly), "assembly"),
+                Tuple.Create(typeof(string), "typeName"),
+                Tuple.Create(typeof(string), "namespaceName") });
     }
 }

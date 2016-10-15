@@ -35,11 +35,12 @@ namespace ReflectionUnitTesting
         /// Assembly extension method that tests for the existance of a type using reflection. 
         /// </summary>
         /// <param name="assembly">Extension parameter for the calling assembly.</param>
-        /// <param name="namespaceName">The namespace of the class to be tested.</param>
         /// <param name="typeName">The name of the class to be tested.</param>
+        /// <param name="namespaceName">(Optional) The namespace of the class to be tested.</param>
+
         /// <exception cref="AssertFailedException">Thrown if the type does not exist.</exception>
         /// <returns>The correct type if it exists.</returns>
-        public static Type TypeExists(this Assembly assembly, string namespaceName, string typeName)
+        public static Type TypeExists(this Assembly assembly, string typeName, string namespaceName = "")
         {
             var name = namespaceName + '.' + typeName;
             var type = assembly.GetType(name);
